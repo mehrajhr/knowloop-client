@@ -1,8 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/knowlooplogo.png";
+import useAuth from "../../hooks/useAuth";
+import DrawerMenuButton from "./DrawerMenuButton";
 
 const Navbar = () => {
+  const { user } = useAuth();
   const links = (
     <>
       <li>
@@ -48,12 +51,24 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <div className="flex gap-4 justify-center items-center">
-          <Link className="text-gray-600 text-xl hover:btn-link" to="/login">
-            Login
-          </Link>
-          <Link className="btn btn-primary rounded-xl" to="/register">
-            Register
-          </Link>
+          {user ? (
+            <>
+            <img className="h-12 w-12 rounded-full" src={user.photoURL} alt="" />
+            <DrawerMenuButton></DrawerMenuButton>
+            </>
+          ) : (
+            <>
+              <Link
+                className="text-gray-600 text-xl hover:btn-link"
+                to="/login"
+              >
+                Login
+              </Link>
+              <Link className="btn btn-primary rounded-xl" to="/register">
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>
