@@ -4,6 +4,8 @@ import loginanimation from "../../assets/login.json";
 import Lottie from "lottie-react";
 import { Link } from "react-router";
 import SocialLogin from "./SocialLogin";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
 const Login = () => {
   const {
@@ -12,16 +14,25 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const { loginUser } = useAuth();
+
   const onSubmit = (data) => {
     console.log(data);
-    // Replace this with Firebase/Auth logic
-    Swal.fire({
-      icon: "success",
-      title: "Login Successful",
-      text: `Welcome back, ${data.email}`,
-    });
+    loginUser(data.email, data.password)
+      .then(async(res) => {
+        const email = data.email;
+        const response = await axios.post('http://localhost:5000/users' , {email});
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: `Welcome back, ${data.email}`,
+        });
+      })
+      .catch((err) => {
+        Swal.fire("Error", "Login failed.", "error");
+        console.log(err);
+      });
   };
-
   return (
     <div className="flex md:flex-row flex-col-reverse justify-center items-center gap-10">
       <div className="max-w-sm mt-10 p-6 shadow-lg rounded-xl bg-white">
@@ -75,7 +86,12 @@ const Login = () => {
             Login
           </button>
         </form>
-        <p>Don't have an account ? <Link to='/register' className="btn btn-link">Register</Link></p>
+        <p>
+          Don't have an account ?{" "}
+          <Link to="/register" className="btn btn-link">
+            Register
+          </Link>
+        </p>
         <SocialLogin></SocialLogin>
       </div>
 

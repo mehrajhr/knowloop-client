@@ -3,9 +3,17 @@ import { Link, NavLink } from "react-router";
 import logo from "../../assets/knowlooplogo.png";
 import useAuth from "../../hooks/useAuth";
 import DrawerMenuButton from "./DrawerMenuButton";
+import { useUser } from "../../hooks/useUser";
+import Loading from "../Loading/Loading";
 
 const Navbar = () => {
   const { user } = useAuth();
+  const { data: currentUser, isLoading} = useUser(user?.email);
+
+  if(isLoading){
+    <Loading></Loading>
+  }
+
   const links = (
     <>
       <li>
@@ -53,7 +61,7 @@ const Navbar = () => {
         <div className="flex gap-4 justify-center items-center">
           {user ? (
             <>
-            <img className="h-12 w-12 rounded-full" src={user.photoURL} alt="" />
+            <img className="h-12 w-12 rounded-full" src={currentUser?.photo} alt="" />
             <DrawerMenuButton></DrawerMenuButton>
             </>
           ) : (

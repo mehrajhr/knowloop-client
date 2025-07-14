@@ -45,7 +45,7 @@ const RegisterForm = () => {
       };
 
       createUser(data.email, data.password)
-        .then((res) => {
+        .then(async(res) => {
           if (res.user) {
             profileUpdate(userData)
               .then(() => {
@@ -60,6 +60,8 @@ const RegisterForm = () => {
               .catch(() => {
                 Swal.fire("Error", "Image upload Failed", "error");
               });
+
+              const res = await axios.post('http://localhost:5000/users' , userData);
           }
         })
         .catch((err) => {

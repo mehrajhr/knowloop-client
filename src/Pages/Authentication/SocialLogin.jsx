@@ -1,13 +1,25 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const SocialLogin = () => {
   const { signWithGoogle } = useAuth();
 
   const handleLogin = () => {
     signWithGoogle()
-      .then((res) => {
+      .then(async(res) => {
+        const user = res.user;
+        const userData = {
+          name: user?.displayName,
+          email: user?.email,
+          photo: user?.photoURL,
+          role: 'student',
+          created_at: new Date().toISOString(),
+          last_login: new Date().toISOString(),
+        };
+        const result = await axios.post('http://localhost:5000/users' , userData);
+
         Swal.fire("Success!", "Account login successfully.", "success");
       })
       .catch((err) => {
