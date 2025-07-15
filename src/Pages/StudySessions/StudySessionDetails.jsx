@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import {
   FaClock,
   FaUser,
   FaStar,
+  FaArrowLeft,
 } from "react-icons/fa";
 import { format } from "date-fns";
 import useAuth from "../../hooks/useAuth";
@@ -298,6 +299,14 @@ const StudySessionDetails = () => {
           )}
         </div>
       </div>
+
+      <Link
+        to="/study-sessions"
+        className="btn btn-outline w-fit mx-auto my-4 flex items-center gap-2"
+      >
+        <FaArrowLeft />
+        Back to All Sessions
+      </Link>
 
       {/* ✅ Reviews */}
       <div className="mt-10">

@@ -1,17 +1,34 @@
 import { useState } from "react";
-import { FaBookOpen, FaClock, FaSearch } from "react-icons/fa";
+import { FaBookOpen, FaClock, FaSearch, FaTimesCircle } from "react-icons/fa";
 import { format } from "date-fns";
 import useAuth from "../../hooks/useAuth";
 import useAvailableSessions from "../../hooks/useAvailableSessions";
 import { Link } from "react-router";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const StudySessions = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [priceFilter, setPriceFilter] = useState("all");
 
   const { data: sessions = [], isLoading } = useAvailableSessions();
+
+  // ✅ Get user's booked sessions
+  const { data: bookedData = [] } = useQuery({
+    queryKey: ["bookedSessions", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/booked-sessions/user/${user?.email}`);
+      return res.data;
+    },
+    enabled: !!user?.email,
+  });
+
+  const bookedIds = bookedData.map((item) => item.sessionId);
 
   const today = new Date();
 
@@ -19,6 +36,29 @@ const StudySessions = () => {
     const startDate = new Date(start);
     const endDate = new Date(end);
     return today >= startDate && today <= endDate;
+  };
+
+  const handleCancel = async (sessionId) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to cancel this booking?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it",
+    });
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await axiosSecure.delete(
+        `/booked-sessions?email=${user.email}&sessionId=${sessionId}`
+      );
+      if (res.data.success) {
+        Swal.fire("Canceled", "Booking has been canceled", "success");
+        queryClient.invalidateQueries(["bookedSessions", user.email]);
+      }
+    } catch {
+      Swal.fire("Error", "Failed to cancel booking", "error");
+    }
   };
 
   const filteredSessions = sessions.filter((session) => {
@@ -58,7 +98,7 @@ const StudySessions = () => {
 
         {/* 🔍 Search and Filter */}
         <div className="flex flex-col md:flex-row gap-4 mb-6 justify-between items-center">
-          {/* 🔍 Search Input */}
+          {/* Search */}
           <div className="relative w-full md:w-1/2">
             <FaSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" />
             <input
@@ -70,9 +110,8 @@ const StudySessions = () => {
             />
           </div>
 
-          {/* 🧭 Filters */}
+          {/* Filters */}
           <div className="flex gap-2 w-full md:w-auto">
-            {/* Status Filter */}
             <select
               className="select select-bordered"
               value={statusFilter}
@@ -83,7 +122,6 @@ const StudySessions = () => {
               <option value="closed">Closed</option>
             </select>
 
-            {/* Price Filter */}
             <select
               className="select select-bordered"
               value={priceFilter}
@@ -96,7 +134,7 @@ const StudySessions = () => {
           </div>
         </div>
 
-        {/* 📚 Session Cards */}
+        {/* 📚 Sessions */}
         {filteredSessions.length === 0 ? (
           <p className="text-center text-gray-500">No sessions found.</p>
         ) : (
@@ -106,6 +144,7 @@ const StudySessions = () => {
                 session.registrationStartDate,
                 session.registrationEndDate
               );
+              const isBooked = bookedIds.includes(session._id);
 
               return (
                 <div
@@ -150,18 +189,30 @@ const StudySessions = () => {
                     </p>
 
                     <div className="card-actions mt-4 flex gap-2">
-                      <button
-                        className={`btn btn-sm ${
-                          ongoing && user ? "btn-primary" : "btn-disabled"
-                        }`}
-                        disabled={!user || !ongoing}
-                      >
-                        {ongoing
-                          ? user
-                            ? "Book Now"
-                            : "Login to Book"
-                          : "Registration Closed"}
-                      </button>
+                      {isBooked && user && ongoing ? (
+                        <button
+                          className="btn btn-sm btn-warning"
+                          onClick={() => handleCancel(session._id)}
+                        >
+                          <FaTimesCircle className="mr-1" />
+                          Cancel Booking
+                        </button>
+                      ) : (
+                        <Link to={`/study-sessions/${session._id}`}>
+                          <button
+                            className={`btn btn-sm ${
+                              ongoing && user ? "btn-primary" : "btn-disabled"
+                            }`}
+                            disabled={!user || !ongoing}
+                          >
+                            {ongoing
+                              ? user
+                                ? "Book Now"
+                                : "Login to Book"
+                              : "Registration Closed"}
+                          </button>
+                        </Link>
+                      )}
 
                       <Link to={`/study-sessions/${session._id}`}>
                         <button className="btn btn-sm btn-outline">
