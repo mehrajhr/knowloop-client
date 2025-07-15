@@ -3,9 +3,9 @@ import { FaArrowRight } from "react-icons/fa";
 import { format } from "date-fns";
 import Loading from "../Loading/Loading";
 import useAvailableSessions from "../../hooks/useAvailableSessions";
+import { Link } from "react-router";
 
 const AvailableSessionsHome = () => {
-
   const { data: sessions = [], isLoading } = useAvailableSessions();
 
   const today = new Date();
@@ -63,9 +63,11 @@ const AvailableSessionsHome = () => {
                   </p>
 
                   <div className="card-actions mt-4">
-                    <button className="btn btn-sm btn-outline">
-                      Read More
-                    </button>
+                    <Link to={`study-sessions/${session._id}`}>
+                      <button className="btn btn-sm btn-outline">
+                        Read More
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

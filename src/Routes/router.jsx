@@ -6,6 +6,7 @@ import Login from '../Pages/Authentication/Login';
 import Register from '../Pages/Authentication/Register';
 import About from '../Pages/About/About';
 import StudySessions from '../Pages/StudySessions/StudySessions';
+import StudySessionDetails from '../Pages/StudySessions/StudySessionDetails';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
         {
           path:'/study-sessions',
           Component: StudySessions
+        },
+        {
+          path: '/study-sessions/:id',
+          Component: StudySessionDetails
         },
         {
             path:'/login',

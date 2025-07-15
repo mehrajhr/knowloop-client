@@ -3,6 +3,7 @@ import { FaBookOpen, FaClock, FaSearch } from "react-icons/fa";
 import { format } from "date-fns";
 import useAuth from "../../hooks/useAuth";
 import useAvailableSessions from "../../hooks/useAvailableSessions";
+import { Link } from "react-router";
 
 const StudySessions = () => {
   const { user } = useAuth();
@@ -35,9 +36,7 @@ const StudySessions = () => {
       (statusFilter === "ongoing" && ongoing) ||
       (statusFilter === "closed" && !ongoing);
 
-    const isFree =
-      session.fee === 0 ||
-      session.fee?.toLowerCase?.() === "free";
+    const isFree = session.fee === 0 || session.fee?.toLowerCase?.() === "free";
 
     const priceMatch =
       priceFilter === "all" ||
@@ -164,9 +163,11 @@ const StudySessions = () => {
                           : "Registration Closed"}
                       </button>
 
-                      <button className="btn btn-sm btn-outline">
-                        Read More
-                      </button>
+                      <Link to={`/study-sessions/${session._id}`}>
+                        <button className="btn btn-sm btn-outline">
+                          Read More
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
