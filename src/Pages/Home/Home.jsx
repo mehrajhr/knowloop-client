@@ -4,11 +4,13 @@ import PlatformStats from './PlatformStats';
 import FAQSection from './FAQSection';
 import WhyChooseKnowloop from './WhyChooseKnowloop';
 import SuccessStories from './SuccessStories';
+import AvailableSessionsHome from './AvailableSessionsHome';
 
 const Home = () => {
     return (
         <div>
             <HeroBanner></HeroBanner>
+            <AvailableSessionsHome></AvailableSessionsHome>
             <PlatformStats></PlatformStats>
             <FAQSection></FAQSection>
             <WhyChooseKnowloop></WhyChooseKnowloop>
