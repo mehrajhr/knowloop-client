@@ -5,6 +5,7 @@ import Home from '../Pages/Home/Home';
 import Login from '../Pages/Authentication/Login';
 import Register from '../Pages/Authentication/Register';
 import About from '../Pages/About/About';
+import StudySessions from '../Pages/StudySessions/StudySessions';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
         {
             index: true,
             Component: Home
+        },
+        {
+          path:'/study-sessions',
+          Component: StudySessions
         },
         {
             path:'/login',

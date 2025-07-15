@@ -1,20 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import { FaBookOpen, FaClock } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { format } from "date-fns";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../Loading/Loading";
+import useAvailableSessions from "../../hooks/useAvailableSessions";
 
 const AvailableSessionsHome = () => {
-  const axiosSecure = useAxiosSecure();
 
-  const { data: sessions = [], isLoading } = useQuery({
-    queryKey: ["sessions"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("sessions");
-      return res.data;
-    },
-  });
+  const { data: sessions = [], isLoading } = useAvailableSessions();
 
   const today = new Date();
 

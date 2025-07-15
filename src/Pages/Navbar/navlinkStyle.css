@@ -1,0 +1,31 @@
+.navbar-links li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem; /* rounded-xl */
+  text-decoration: none;
+  color: #1f2937; /* Tailwind slate-800 */
+  border: 2px dotted #cbd5e1; /* Tailwind slate-300 */
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.navbar-links li a:hover {
+  background: linear-gradient(to right, #3b82f6, #06b6d4); /* blue to cyan */
+  color: white;
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-style: solid;
+  border-color: #38bdf8; /* sky-400 */
+}
+
+/* Active State */
+.navbar-links li a.active {
+  background-color: #0ea5e9; /* Tailwind sky-500 */
+  color: white;
+  font-weight: 600;
+  border: 2px solid #0284c7; /* sky-600 */
+  box-shadow: inset 0 -2px 0 0 #0369a1;
+}

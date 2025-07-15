@@ -5,22 +5,29 @@ import useAuth from "../../hooks/useAuth";
 import DrawerMenuButton from "./DrawerMenuButton";
 import { useUser } from "../../hooks/useUser";
 import Loading from "../Loading/Loading";
+import { FaHome, FaChalkboardTeacher } from "react-icons/fa";
+import "./navlinkStyle.css";
 
 const Navbar = () => {
   const { user } = useAuth();
-  const { data: currentUser, isLoading} = useUser(user?.email);
+  const { data: currentUser, isLoading } = useUser(user?.email);
 
-  if(isLoading){
-    <Loading></Loading>
+  if (isLoading) {
+    <Loading></Loading>;
   }
 
   const links = (
     <>
-      <li>
-        <NavLink to="/">Home</NavLink>
+      <li className="my-2 md:mx-2 md:my-0">
+        <NavLink to="/">
+          <FaHome /> Home
+        </NavLink>
       </li>
-      <li>
-        <NavLink to="/">Home</NavLink>
+
+      <li className="my-2 md:mx-2 md:my-0">
+        <NavLink to="/study-sessions">
+          <FaChalkboardTeacher /> Study Sessions
+        </NavLink>
       </li>
     </>
   );
@@ -47,7 +54,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow navbar-links"
           >
             {links}
           </ul>
@@ -55,14 +62,18 @@ const Navbar = () => {
         <img className="h-16 fles justify-center items-center" src={logo}></img>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+        <ul className="menu menu-horizontal px-1 navbar-links">{links}</ul>
       </div>
       <div className="navbar-end">
         <div className="flex gap-4 justify-center items-center">
           {user ? (
             <>
-            <img className="h-12 w-12 rounded-full" src={currentUser?.photo} alt="" />
-            <DrawerMenuButton></DrawerMenuButton>
+              <img
+                className="h-12 w-12 rounded-full"
+                src={currentUser?.photo}
+                alt=""
+              />
+              <DrawerMenuButton></DrawerMenuButton>
             </>
           ) : (
             <>
