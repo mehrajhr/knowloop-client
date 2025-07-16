@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import {
@@ -22,15 +22,21 @@ const StudySessionDetails = () => {
   const axiosSecure = useAxiosSecure();
   const cancelBooking = useCancelBookingCore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [alreadyBooked, setAlreadyBooked] = useState(false);
   const [bookingInProgress, setBookingInProgress] = useState(false);
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(5);
 
-  // ✅ Fetch session details
-  const { data: session = {}, isLoading } = useQuery({
+  const {
+    data: session = {},
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["session", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/sessions/${id}`);
@@ -39,7 +45,6 @@ const StudySessionDetails = () => {
     enabled: !!id,
   });
 
-  // ✅ Check booking status
   useQuery({
     queryKey: ["bookingStatus", id, user?.email],
     queryFn: async () => {
@@ -52,8 +57,6 @@ const StudySessionDetails = () => {
       if (data.booked && data.paymentStatus === "unpaid") {
         setBookingInProgress(true);
         setShowPaymentOptions(true);
-
-        // ✅ Calculate remaining time from bookedAt
         const now = new Date();
         const bookedAt = new Date(data.bookedAt);
         const elapsed = Math.floor((now - bookedAt) / 1000);
@@ -147,14 +150,37 @@ const StudySessionDetails = () => {
 
   const handleCancelBooking = async () => {
     const success = await cancelBooking(session._id);
-
     if (success) {
-      // Your component-specific logic:
       setAlreadyBooked(false);
       setBookingInProgress(false);
       setShowPaymentOptions(false);
       setTimerActive(false);
     }
+  };
+
+  const reviewMutation = useMutation({
+    mutationFn: async ({ reviewText, rating }) => {
+      const res = await axiosSecure.post(`sessions/review/${session._id}`, {
+        studentName: user.displayName,
+        reviewText,
+        rating,
+      });
+      return res.data;
+    },
+    onSuccess: () => {
+      Swal.fire("Thank you!", "Your review has been submitted.", "success");
+      setReviewText("");
+      setRating(5);
+      refetch();
+    },
+    onError: () => {
+      Swal.fire("Error", "Failed to submit review.", "error");
+    },
+  });
+
+  const handleSubmitReview = () => {
+    if (!reviewText || !rating) return;
+    reviewMutation.mutate({ reviewText, rating });
   };
 
   if (isLoading) return <Loading />;
@@ -166,7 +192,7 @@ const StudySessionDetails = () => {
   const {
     title,
     tutor,
-    tutorEmail,
+    tutor_email,
     description,
     registrationStartDate,
     registrationEndDate,
@@ -183,6 +209,8 @@ const StudySessionDetails = () => {
     now >= new Date(registrationStartDate) &&
     now <= new Date(registrationEndDate);
   const isFree = fee === 0 || fee?.toString()?.toLowerCase() === "free";
+  const canReview =
+    alreadyBooked && (isFree || (!isFree && !bookingInProgress));
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-10">
@@ -291,11 +319,9 @@ const StudySessionDetails = () => {
         to="/study-sessions"
         className="btn btn-outline w-fit mx-auto my-4 flex items-center gap-2"
       >
-        <FaArrowLeft />
-        Back to All Sessions
+        <FaArrowLeft /> Back to All Sessions
       </Link>
 
-      {/* ✅ Reviews */}
       <div className="mt-10">
         <h3 className="text-xl font-semibold mb-4">Student Reviews</h3>
         {reviews.length === 0 ? (
@@ -307,10 +333,44 @@ const StudySessionDetails = () => {
                 <p className="font-semibold text-primary">{r.studentName}</p>
                 <p className="italic text-sm text-gray-600">"{r.reviewText}"</p>
                 <p className="text-yellow-500 text-sm">
-                  Rating: {r.rating} / 5
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <FaStar
+                      key={i}
+                      className={`inline mr-1 ${
+                        i < r.rating ? "text-yellow-500" : "text-gray-300"
+                      }`}
+                    />
+                  ))}
                 </p>
               </div>
             ))}
+          </div>
+        )}
+
+        {canReview && (
+          <div className="mt-6 space-y-3">
+            <textarea
+              className="textarea textarea-bordered w-full"
+              placeholder="Write your review..."
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            ></textarea>
+
+            <div className="flex items-center gap-1">
+              {Array.from({ length: 5 }, (_, i) => (
+                <FaStar
+                  key={i}
+                  className={`cursor-pointer text-2xl ${
+                    i < rating ? "text-yellow-500" : "text-gray-400"
+                  }`}
+                  onClick={() => setRating(i + 1)}
+                />
+              ))}
+            </div>
+
+            <button onClick={handleSubmitReview} className="btn btn-primary">
+              Submit Review
+            </button>
           </div>
         )}
       </div>
