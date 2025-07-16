@@ -14,11 +14,13 @@ import { format } from "date-fns";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../Loading/Loading";
+import useCancelBookingCore from "../../hooks/useCancelBookingCore";
 
 const StudySessionDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const cancelBooking = useCancelBookingCore();
   const navigate = useNavigate();
 
   const [alreadyBooked, setAlreadyBooked] = useState(false);
@@ -110,8 +112,11 @@ const StudySessionDetails = () => {
     const bookingData = {
       sessionId: session._id,
       studentEmail: user.email,
-      tutorEmail: session.tutorEmail,
+      studentName: user.displayName,
+      tutorEmail: session.tutor_email,
+      tutorName: session.tutor,
       sessionTitle: session.title,
+      fee: session.fee,
       bookedAt: new Date(),
       paymentStatus: isFree ? "free" : "unpaid",
     };
@@ -141,32 +146,14 @@ const StudySessionDetails = () => {
   };
 
   const handleCancelBooking = async () => {
-    const confirm = await Swal.fire({
-      title: "Are you sure?",
-      text: "Do you really want to cancel this booking?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, cancel it",
-      cancelButtonText: "No",
-    });
+    const success = await cancelBooking(session._id);
 
-    if (!confirm.isConfirmed) return;
-
-    try {
-      const res = await axiosSecure.delete(
-        `/booked-sessions?email=${user.email}&sessionId=${session._id}`
-      );
-      if (res.data.success) {
-        Swal.fire("Canceled", "Your booking has been canceled.", "success");
-        setAlreadyBooked(false);
-        setBookingInProgress(false);
-        setShowPaymentOptions(false);
-        setTimerActive(false);
-      } else {
-        Swal.fire("Info", res.data.message, "info");
-      }
-    } catch {
-      Swal.fire("Error", "Failed to cancel booking.", "error");
+    if (success) {
+      // Your component-specific logic:
+      setAlreadyBooked(false);
+      setBookingInProgress(false);
+      setShowPaymentOptions(false);
+      setTimerActive(false);
     }
   };
 

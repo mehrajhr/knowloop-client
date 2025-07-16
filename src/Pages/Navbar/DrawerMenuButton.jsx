@@ -1,12 +1,42 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { FiMenu, FiUser, FiEdit, FiLogOut } from "react-icons/fi";
+import { FiMenu, FiUser, FiEdit, FiLogOut, FiBook } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 
 const DrawerMenuButton = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { logOutUser , setUser } = useAuth();
+  const { logOutUser, setUser } = useAuth();
+
+  const links = (
+    <>
+      <li>
+        <Link onClick={() => setIsDrawerOpen(false)}>
+          <FiUser className="inline mr-2" /> My Profile
+        </Link>
+      </li>
+      <li>
+        <Link onClick={() => setIsDrawerOpen(false)}>
+          <FiEdit className="inline mr-2" /> Update Profile
+        </Link>
+      </li>
+      <li>
+        <Link to="/my-booked-sessions" onClick={() => setIsDrawerOpen(false)}>
+          <FiBook className="inline mr-2" /> My Booked Sessions
+        </Link>
+      </li>
+      <li>
+        <button
+          onClick={() => {
+            handleLogout();
+            setIsDrawerOpen(false);
+          }}
+        >
+          <FiLogOut className="inline mr-2" /> Logout
+        </button>
+      </li>
+    </>
+  );
 
   const handleLogout = () => {
     logOutUser()
@@ -20,9 +50,7 @@ const DrawerMenuButton = () => {
         });
         setUser(null);
       })
-      .catch((err) => {
-
-      });
+      .catch((err) => {});
   };
 
   return (
@@ -63,29 +91,7 @@ const DrawerMenuButton = () => {
         </div>
 
         {/* Menu Links */}
-        <ul className="menu p-4 text-base-content space-y-2">
-          <li>
-            <Link onClick={() => setIsDrawerOpen(false)}>
-              <FiUser className="inline mr-2" /> My Profile
-            </Link>
-          </li>
-          <li>
-            <Link onClick={() => setIsDrawerOpen(false)}>
-              <FiEdit className="inline mr-2" /> Update Profile
-            </Link>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsDrawerOpen(false);
-              }}
-            >
-              <FiLogOut className="inline mr-2" /> Logout
-            </button>
-          </li>
-          {/* Add More Menu Items Here */}
-        </ul>
+        <ul className="menu p-4 text-base-content space-y-2">{links}</ul>
       </div>
     </div>
   );

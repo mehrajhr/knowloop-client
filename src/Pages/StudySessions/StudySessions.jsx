@@ -4,14 +4,11 @@ import { format } from "date-fns";
 import useAuth from "../../hooks/useAuth";
 import useAvailableSessions from "../../hooks/useAvailableSessions";
 import { Link } from "react-router";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import Swal from "sweetalert2";
+import useUserBookedSessions from "../../hooks/useUserBookedSessions";
+import useCancelBooking from "../../hooks/useCancelBookingCore";
 
 const StudySessions = () => {
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
-  const queryClient = useQueryClient();
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [priceFilter, setPriceFilter] = useState("all");
@@ -19,14 +16,8 @@ const StudySessions = () => {
   const { data: sessions = [], isLoading } = useAvailableSessions();
 
   // ✅ Get user's booked sessions
-  const { data: bookedData = [] } = useQuery({
-    queryKey: ["bookedSessions", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/booked-sessions/user/${user?.email}`);
-      return res.data;
-    },
-    enabled: !!user?.email,
-  });
+  const { data: bookedData = [] } = useUserBookedSessions();
+  const cancelBooking = useCancelBooking();
 
   const bookedIds = bookedData.map((item) => item.sessionId);
 
@@ -39,26 +30,7 @@ const StudySessions = () => {
   };
 
   const handleCancel = async (sessionId) => {
-    const confirm = await Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to cancel this booking?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, cancel it",
-    });
-    if (!confirm.isConfirmed) return;
-
-    try {
-      const res = await axiosSecure.delete(
-        `/booked-sessions?email=${user.email}&sessionId=${sessionId}`
-      );
-      if (res.data.success) {
-        Swal.fire("Canceled", "Booking has been canceled", "success");
-        queryClient.invalidateQueries(["bookedSessions", user.email]);
-      }
-    } catch {
-      Swal.fire("Error", "Failed to cancel booking", "error");
-    }
+    cancelBooking(sessionId);
   };
 
   const filteredSessions = sessions.filter((session) => {

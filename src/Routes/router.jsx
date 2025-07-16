@@ -7,6 +7,7 @@ import Register from '../Pages/Authentication/Register';
 import About from '../Pages/About/About';
 import StudySessions from '../Pages/StudySessions/StudySessions';
 import StudySessionDetails from '../Pages/StudySessions/StudySessionDetails';
+import MyBookedSessions from '../Pages/MyBookedSessions/MyBookedSessions';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         {
           path: '/study-sessions/:id',
           Component: StudySessionDetails
+        },
+        {
+          path: '/my-booked-sessions',
+          Component: MyBookedSessions
         },
         {
             path:'/login',
