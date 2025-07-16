@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { FiMenu, FiUser, FiEdit, FiLogOut, FiBook } from "react-icons/fi";
+import { FiMenu, FiUser, FiEdit, FiLogOut, FiBook, FiFileText, FiClipboard } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 
@@ -23,6 +23,20 @@ const DrawerMenuButton = () => {
       <li>
         <Link to="/my-booked-sessions" onClick={() => setIsDrawerOpen(false)}>
           <FiBook className="inline mr-2" /> My Booked Sessions
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/create-note"
+          onClick={() => setIsDrawerOpen(false)}
+        >
+          <FiFileText className="inline mr-2" /> Create Note
+        </Link>
+      </li>
+
+      <li>
+        <Link to="/manage-notes" onClick={() => setIsDrawerOpen(false)}>
+          <FiClipboard className="inline mr-2" /> Manage Notes
         </Link>
       </li>
       <li>
