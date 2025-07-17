@@ -12,6 +12,8 @@ import {
   FiEdit3,
   FiUpload,
   FiBookOpen,
+  FiUsers,
+  FiFolder,
 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
@@ -70,7 +72,7 @@ const DrawerMenuButton = () => {
           <FiEdit3 className="inline mr-2" /> Manage Study Sessions
         </Link>
       </li>
-      <li>
+      {/* <li>
         <Link to="/upload-materials">
           <FiUpload className="inline mr-2" /> Upload Materials
         </Link>
@@ -79,7 +81,7 @@ const DrawerMenuButton = () => {
         <Link to="/my-materials">
           <FaBookOpen className="inline mr-2" /> My Materials
         </Link>
-      </li>
+      </li> */}
 
       {/* for admin */}
 
@@ -88,6 +90,18 @@ const DrawerMenuButton = () => {
           <FiBook className="inline mr-2" /> All Study Sessions
         </Link>
       </li>
+      <li>
+        <Link to="/manage-users">
+          <FiUsers className="inline mr-2" /> Manage Users
+        </Link>
+      </li>
+      <li>
+        <Link to="/manage-materials">
+          <FiFolder className="inline mr-2" /> Manage Materials
+        </Link>
+      </li>
+
+      {/* for all */}
       <li>
         <button
           onClick={() => {

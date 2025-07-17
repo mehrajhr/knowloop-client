@@ -16,6 +16,8 @@ import ManageStudySessions from '../Pages/ManageSessions/ManageSessions';
 import UploadMaterials from '../Pages/Upload Materials/UploadMaterials';
 import MyMaterials from '../Pages/My Materials/MyMaterials';
 import StudyMaterials from '../Pages/StudyMaterials/StudyMaterials';
+import ManageUsers from '../Pages/ManageUsers/ManageUsers';
+import ManageMaterialsAdmin from '../Pages/ManageMaterialAdmin/ManageMaterialsAdmin';
 
 const router = createBrowserRouter([
   {
@@ -74,6 +76,16 @@ const router = createBrowserRouter([
           path: '/all-sessions',
           Component: AllStudySessions
         },
+        {
+          path: '/manage-users',
+          Component: ManageUsers
+        },
+        {
+          path: '/manage-materials',
+          Component: ManageMaterialsAdmin
+        },
+
+        // for all
         {
             path:'/login',
             Component: Login
