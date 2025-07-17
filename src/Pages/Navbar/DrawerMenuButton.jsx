@@ -18,10 +18,15 @@ import {
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { FaBookOpen } from "react-icons/fa";
+import useUserRole from "../../hooks/useUserRole ";
+import Loading from "../Loading/Loading";
 
 const DrawerMenuButton = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { logOutUser, setUser } = useAuth();
+  const { role, roleLoading } = useUserRole();
+
+  if (roleLoading) return <span>Loading...</span>;
 
   const links = (
     <>
@@ -37,69 +42,85 @@ const DrawerMenuButton = () => {
       </li>
 
       {/* for students */}
-      <li>
-        <Link to="/my-booked-sessions" onClick={() => setIsDrawerOpen(false)}>
-          <FiBook className="inline mr-2" /> My Booked Sessions
-        </Link>
-      </li>
-      <li>
-        <Link to="/create-note" onClick={() => setIsDrawerOpen(false)}>
-          <FiFileText className="inline mr-2" /> Create Note
-        </Link>
-      </li>
 
-      <li>
-        <Link to="/manage-notes" onClick={() => setIsDrawerOpen(false)}>
-          <FiClipboard className="inline mr-2" /> Manage Notes
-        </Link>
-      </li>
-      <li>
-        <Link to="/study-materials">
-          <FiBookOpen className="inline mr-2" /> Study Materials
-        </Link>
-      </li>
+      {role === "student" && (
+        <>
+          <li>
+            <Link
+              to="/my-booked-sessions"
+              onClick={() => setIsDrawerOpen(false)}
+            >
+              <FiBook className="inline mr-2" /> My Booked Sessions
+            </Link>
+          </li>
+          <li>
+            <Link to="/create-note" onClick={() => setIsDrawerOpen(false)}>
+              <FiFileText className="inline mr-2" /> Create Note
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/manage-notes" onClick={() => setIsDrawerOpen(false)}>
+              <FiClipboard className="inline mr-2" /> Manage Notes
+            </Link>
+          </li>
+          <li>
+            <Link to="/study-materials">
+              <FiBookOpen className="inline mr-2" /> Study Materials
+            </Link>
+          </li>
+        </>
+      )}
 
       {/* for teacher */}
 
-      <li>
-        <Link to="/create-session">
-          <FiPlusCircle className="inline mr-2" />
-          Create Session
-        </Link>
-      </li>
-      <li>
-        <Link to="/manage-sessions">
-          <FiEdit3 className="inline mr-2" /> Manage Study Sessions
-        </Link>
-      </li>
-      {/* <li>
-        <Link to="/upload-materials">
-          <FiUpload className="inline mr-2" /> Upload Materials
-        </Link>
-      </li>
-      <li>
-        <Link to="/my-materials">
-          <FaBookOpen className="inline mr-2" /> My Materials
-        </Link>
-      </li> */}
+      {role === "tutor" && (
+        <>
+          <li>
+            <Link to="/create-session">
+              <FiPlusCircle className="inline mr-2" />
+              Create Session
+            </Link>
+          </li>
+          <li>
+            <Link to="/manage-sessions">
+              <FiEdit3 className="inline mr-2" /> Manage Study Sessions
+            </Link>
+          </li>
+          <li>
+            <Link to="/upload-materials">
+              <FiUpload className="inline mr-2" /> Upload Materials
+            </Link>
+          </li>
+          <li>
+            <Link to="/my-materials">
+              <FaBookOpen className="inline mr-2" /> My Materials
+            </Link>
+          </li>
+        </>
+      )}
 
       {/* for admin */}
 
-      <li>
-        <Link to="/all-sessions" onClick={() => setIsDrawerOpen(false)}>
-          <FiBook className="inline mr-2" /> All Study Sessions
-        </Link>
-      </li>
-      <li>
-        <Link to="/manage-users">
-          <FiUsers className="inline mr-2" /> Manage Users
-        </Link>
-      </li>
-      <li>
-        <Link to="/manage-materials">
-          <FiFolder className="inline mr-2" /> Manage Materials
-        </Link>
-      </li>
+      {role === "admin" && (
+        <>
+          <li>
+            <Link to="/all-sessions" onClick={() => setIsDrawerOpen(false)}>
+              <FiBook className="inline mr-2" /> All Study Sessions
+            </Link>
+          </li>
+          <li>
+            <Link to="/manage-users">
+              <FiUsers className="inline mr-2" /> Manage Users
+            </Link>
+          </li>
+          <li>
+            <Link to="/manage-materials">
+              <FiFolder className="inline mr-2" /> Manage Materials
+            </Link>
+          </li>
+        </>
+      )}
 
       {/* for all */}
       <li>

@@ -18,6 +18,11 @@ import MyMaterials from '../Pages/My Materials/MyMaterials';
 import StudyMaterials from '../Pages/StudyMaterials/StudyMaterials';
 import ManageUsers from '../Pages/ManageUsers/ManageUsers';
 import ManageMaterialsAdmin from '../Pages/ManageMaterialAdmin/ManageMaterialsAdmin';
+import Forbidden from '../Pages/Forbidden/Forbidden';
+import PrivateRoutes from './PrivateRoutes';
+import TutorRoutes from './TutorRoutes';
+import AdminRoutes from './AdminRoutes';
+import NotFound from '../Pages/Error/NotFound';
 
 const router = createBrowserRouter([
   {
@@ -39,50 +44,50 @@ const router = createBrowserRouter([
         // for students
         {
           path: '/my-booked-sessions',
-          Component: MyBookedSessions
+          element: <PrivateRoutes><MyBookedSessions></MyBookedSessions></PrivateRoutes>
         },
         {
           path: '/create-note',
-          Component: CreateNote
+          element: <PrivateRoutes><CreateNote></CreateNote></PrivateRoutes>
         },
         {
           path: '/manage-notes',
-          Component: ManageNotes
+          element: <PrivateRoutes><ManageNotes></ManageNotes></PrivateRoutes>
         },
         {
           path: '/study-materials',
-          Component: StudyMaterials
+          element: <PrivateRoutes><StudyMaterials></StudyMaterials></PrivateRoutes>
         },
         // for teacher
         {
           path:'/create-session',
-          Component: CreateSession
+          element: <TutorRoutes><CreateSession></CreateSession></TutorRoutes>
         },
         {
           path: '/manage-sessions',
-          Component: ManageStudySessions
+          element: <TutorRoutes><ManageStudySessions></ManageStudySessions></TutorRoutes>
         },
         {
           path: '/upload-materials',
-          Component: UploadMaterials
+          element: <TutorRoutes><UploadMaterials></UploadMaterials></TutorRoutes>
         },
         {
           path: '/my-materials',
-          Component: MyMaterials
+          element: <TutorRoutes><MyMaterials></MyMaterials></TutorRoutes>
         },
 
         // for admins
         {
           path: '/all-sessions',
-          Component: AllStudySessions
+          element: <AdminRoutes><AllStudySessions></AllStudySessions></AdminRoutes>
         },
         {
           path: '/manage-users',
-          Component: ManageUsers
+          element: <AdminRoutes><ManageUsers></ManageUsers></AdminRoutes>
         },
         {
           path: '/manage-materials',
-          Component: ManageMaterialsAdmin
+          element: <AdminRoutes><ManageMaterialsAdmin></ManageMaterialsAdmin></AdminRoutes>
         },
 
         // for all
@@ -98,9 +103,17 @@ const router = createBrowserRouter([
         {
           path:'/about',
           Component: About
+        },
+        {
+          path: '/forbidden',
+          Component: Forbidden
         }
     ]
   },
+  {
+    path: '/*',
+    Component: NotFound
+  }
 ]);
 
 export default router;
