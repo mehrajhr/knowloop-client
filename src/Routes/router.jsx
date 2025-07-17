@@ -111,7 +111,7 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/*',
+    path: '*',
     Component: NotFound
   }
 ]);

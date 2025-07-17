@@ -7,6 +7,7 @@ import { Link } from "react-router";
 import useUserBookedSessions from "../../hooks/useUserBookedSessions";
 import useCancelBooking from "../../hooks/useCancelBookingCore";
 import Loading from "../Loading/Loading";
+import useUserRole from "../../hooks/useUserRole ";
 
 const StudySessions = () => {
   const { user } = useAuth();
@@ -21,6 +22,7 @@ const StudySessions = () => {
   const cancelBooking = useCancelBooking();
 
   const bookedIds = bookedData.map((item) => item.sessionId);
+  const {role} = useUserRole();
 
   const today = new Date();
 
@@ -176,7 +178,7 @@ const StudySessions = () => {
                             className={`btn btn-sm ${
                               ongoing && user ? "btn-primary" : "btn-disabled"
                             }`}
-                            disabled={!user || !ongoing}
+                            disabled={!user || !ongoing || role !== 'student'}
                           >
                             {ongoing
                               ? user

@@ -15,6 +15,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../Loading/Loading";
 import useCancelBookingCore from "../../hooks/useCancelBookingCore";
+import useUserRole from "../../hooks/useUserRole ";
 
 const StudySessionDetails = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const StudySessionDetails = () => {
   const [timerActive, setTimerActive] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(5);
+  const role = useUserRole();
 
   const {
     data: session = {},
@@ -271,7 +273,7 @@ const StudySessionDetails = () => {
                   ? "btn-primary"
                   : "btn-disabled"
               }`}
-              disabled={!user || !isOngoing || alreadyBooked}
+              disabled={!user || !isOngoing || alreadyBooked || role !== 'student'}
             >
               {alreadyBooked
                 ? "Already Booked"
