@@ -9,6 +9,7 @@ import {
   FiFileText,
   FiClipboard,
   FiPlusCircle,
+  FiEdit3,
 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
@@ -56,14 +57,16 @@ const DrawerMenuButton = () => {
           Create Session
         </Link>
       </li>
+      <li>
+        <Link to="/manage-sessions">
+          <FiEdit3 className="inline mr-2" /> Manage Study Sessions
+        </Link>
+      </li>
 
       {/* for admin */}
 
       <li>
-        <Link
-          to="/all-sessions"
-          onClick={() => setIsDrawerOpen(false)}
-        >
+        <Link to="/all-sessions" onClick={() => setIsDrawerOpen(false)}>
           <FiBook className="inline mr-2" /> All Study Sessions
         </Link>
       </li>

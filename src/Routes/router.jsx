@@ -12,6 +12,7 @@ import CreateNote from '../Pages/Notes/CreateNote';
 import ManageNotes from '../Pages/Notes/ManageNotes';
 import CreateSession from '../Pages/Create Sessions/CreateSession';
 import AllStudySessions from '../Pages/AllStudySessions/AllStudySessions';
+import ManageStudySessions from '../Pages/ManageSessions/ManageSessions';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         {
           path:'/create-session',
           Component: CreateSession
+        },
+        {
+          path: '/manage-sessions',
+          Component: ManageStudySessions
         },
 
         // for admins

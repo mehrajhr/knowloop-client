@@ -31,9 +31,9 @@ const AllStudySessions = () => {
 
   const handleUpdate = (session) => {
     setUpdateSessionId(session._id);
-    setIsFree(session.fee === 'Free');
+    setIsFree(session.fee === "Free");
     reset({
-      isFree: session.fee === 'Free' ? "yes" : "no",
+      isFree: session.fee === "Free" ? "yes" : "no",
       price: session.fee || 0,
     });
     document.getElementById("updateModal").checked = true;
@@ -161,12 +161,14 @@ const AllStudySessions = () => {
                       />
                     ) : (
                       <div className="flex gap-2">
-                        <button
-                          onClick={() => handleUpdate(session)}
-                          className="btn btn-info btn-sm"
-                        >
-                          Update
-                        </button>
+                        {session.status !== "rejected" && (
+                          <button
+                            onClick={() => handleUpdate(session)}
+                            className="btn btn-info btn-sm"
+                          >
+                            Update
+                          </button>
+                        )}
                         <button
                           onClick={() => handleDelete(session._id)}
                           className="btn btn-error btn-sm"
