@@ -13,6 +13,8 @@ import ManageNotes from '../Pages/Notes/ManageNotes';
 import CreateSession from '../Pages/Create Sessions/CreateSession';
 import AllStudySessions from '../Pages/AllStudySessions/AllStudySessions';
 import ManageStudySessions from '../Pages/ManageSessions/ManageSessions';
+import UploadMaterials from '../Pages/Upload Materials/UploadMaterials';
+import MyMaterials from '../Pages/My Materials/MyMaterials';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
         {
           path: '/manage-sessions',
           Component: ManageStudySessions
+        },
+        {
+          path: '/upload-materials',
+          Component: UploadMaterials
+        },
+        {
+          path: '/my-materials',
+          Component: MyMaterials
         },
 
         // for admins

@@ -10,9 +10,11 @@ import {
   FiClipboard,
   FiPlusCircle,
   FiEdit3,
+  FiUpload,
 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import { FaBookOpen } from "react-icons/fa";
 
 const DrawerMenuButton = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -60,6 +62,16 @@ const DrawerMenuButton = () => {
       <li>
         <Link to="/manage-sessions">
           <FiEdit3 className="inline mr-2" /> Manage Study Sessions
+        </Link>
+      </li>
+      <li>
+        <Link to="/upload-materials">
+          <FiUpload className="inline mr-2" /> Upload Materials
+        </Link>
+      </li>
+      <li>
+        <Link to="/my-materials">
+          <FaBookOpen className="inline mr-2" /> My Materials
         </Link>
       </li>
 

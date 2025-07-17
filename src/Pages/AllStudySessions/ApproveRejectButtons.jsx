@@ -11,7 +11,7 @@ const ApproveRejectButtons = ({ sessionId, refetch }) => {
   const [fee, setFee] = useState("0");
 
   const handleApprove = async () => {
-    const finalFee = type === "paid" ? parseFloat(fee) : 0;
+    const finalFee = type === "paid" ? parseFloat(fee) : 'Free';
 
     try {
       const res = await axiosSecure.patch(`sessions/approve/${sessionId}`, {
