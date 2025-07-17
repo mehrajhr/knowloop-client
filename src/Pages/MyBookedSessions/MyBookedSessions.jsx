@@ -3,6 +3,7 @@ import { FaEye, FaTimes, FaCreditCard } from "react-icons/fa";
 import { format } from "date-fns";
 import useUserBookedSessions from "../../hooks/useUserBookedSessions";
 import useCancelBookingCore from "../../hooks/useCancelBookingCore";
+import Loading from "../Loading/Loading";
 
 const MyBookedSessions = () => {
   const cancel = useCancelBookingCore();
@@ -12,14 +13,20 @@ const MyBookedSessions = () => {
   const handleCancel = async (sessionId) => {
     const success = await cancel(sessionId);
 
-    if(success){
+    if (success) {
       refetch();
     }
   };
 
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
-      <h2 className="text-3xl font-bold mb-6 text-center">My Booked Sessions</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">
+        My Booked Sessions
+      </h2>
 
       {isLoading ? (
         <p className="text-center">Loading your bookings...</p>
@@ -48,9 +55,8 @@ const MyBookedSessions = () => {
                   <td>{booking.tutorName}</td>
                   <td>{booking.tutorEmail}</td>
                   <td>
-                   {
-                    booking.fee
-                   }
+                    {booking.fee !== "Free" && "$"}
+                    {booking.fee}
                   </td>
                   <td>
                     <span
@@ -80,9 +86,7 @@ const MyBookedSessions = () => {
                     {booking.paymentStatus === "unpaid" && (
                       <>
                         <button
-                          onClick={() =>
-                            handleCancel(booking.sessionId)
-                          }
+                          onClick={() => handleCancel(booking.sessionId)}
                           className="btn btn-xs btn-outline btn-error"
                         >
                           <FaTimes className="inline mr-1" /> Cancel

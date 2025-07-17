@@ -250,7 +250,7 @@ const StudySessionDetails = () => {
               {isFree ? (
                 <span className="text-success">Free</span>
               ) : (
-                <span className="text-warning">{fee}</span>
+                <span className="text-warning">${fee}</span>
               )}
             </p>
             <p>

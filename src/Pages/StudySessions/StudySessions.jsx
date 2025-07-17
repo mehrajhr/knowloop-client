@@ -6,6 +6,7 @@ import useAvailableSessions from "../../hooks/useAvailableSessions";
 import { Link } from "react-router";
 import useUserBookedSessions from "../../hooks/useUserBookedSessions";
 import useCancelBooking from "../../hooks/useCancelBookingCore";
+import Loading from "../Loading/Loading";
 
 const StudySessions = () => {
   const { user } = useAuth();
@@ -59,7 +60,7 @@ const StudySessions = () => {
   });
 
   if (isLoading)
-    return <p className="text-center">Loading study sessions...</p>;
+    return <Loading></Loading>;
 
   return (
     <section className="py-10 bg-base-100">
@@ -135,7 +136,7 @@ const StudySessions = () => {
 
                     <p className="text-sm">
                       <strong>Fee:</strong>{" "}
-                      <span className="text-success">{session.fee}</span>
+                      <span className="text-success">{session.fee!=="Free"&&'$'}{session.fee}</span>
                     </p>
 
                     <p className="mt-2 text-sm">

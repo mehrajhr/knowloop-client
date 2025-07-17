@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { FiMenu, FiUser, FiEdit, FiLogOut, FiBook, FiFileText, FiClipboard } from "react-icons/fi";
+import {
+  FiMenu,
+  FiUser,
+  FiEdit,
+  FiLogOut,
+  FiBook,
+  FiFileText,
+  FiClipboard,
+  FiPlusCircle,
+} from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 
@@ -20,16 +29,15 @@ const DrawerMenuButton = () => {
           <FiEdit className="inline mr-2" /> Update Profile
         </Link>
       </li>
+
+      {/* for students */}
       <li>
         <Link to="/my-booked-sessions" onClick={() => setIsDrawerOpen(false)}>
           <FiBook className="inline mr-2" /> My Booked Sessions
         </Link>
       </li>
       <li>
-        <Link
-          to="/create-note"
-          onClick={() => setIsDrawerOpen(false)}
-        >
+        <Link to="/create-note" onClick={() => setIsDrawerOpen(false)}>
           <FiFileText className="inline mr-2" /> Create Note
         </Link>
       </li>
@@ -37,6 +45,26 @@ const DrawerMenuButton = () => {
       <li>
         <Link to="/manage-notes" onClick={() => setIsDrawerOpen(false)}>
           <FiClipboard className="inline mr-2" /> Manage Notes
+        </Link>
+      </li>
+
+      {/* for teacher */}
+
+      <li>
+        <Link to="/create-session">
+          <FiPlusCircle className="inline mr-2" />
+          Create Session
+        </Link>
+      </li>
+
+      {/* for admin */}
+
+      <li>
+        <Link
+          to="/all-sessions"
+          onClick={() => setIsDrawerOpen(false)}
+        >
+          <FiBook className="inline mr-2" /> All Study Sessions
         </Link>
       </li>
       <li>

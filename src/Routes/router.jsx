@@ -10,6 +10,8 @@ import StudySessionDetails from '../Pages/StudySessions/StudySessionDetails';
 import MyBookedSessions from '../Pages/MyBookedSessions/MyBookedSessions';
 import CreateNote from '../Pages/Notes/CreateNote';
 import ManageNotes from '../Pages/Notes/ManageNotes';
+import CreateSession from '../Pages/Create Sessions/CreateSession';
+import AllStudySessions from '../Pages/AllStudySessions/AllStudySessions';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,7 @@ const router = createBrowserRouter([
           path: '/study-sessions/:id',
           Component: StudySessionDetails
         },
+        // for students
         {
           path: '/my-booked-sessions',
           Component: MyBookedSessions
@@ -39,6 +42,17 @@ const router = createBrowserRouter([
         {
           path: '/manage-notes',
           Component: ManageNotes
+        },
+        // for teacher
+        {
+          path:'/create-session',
+          Component: CreateSession
+        },
+
+        // for admins
+        {
+          path: '/all-sessions',
+          Component: AllStudySessions
         },
         {
             path:'/login',
