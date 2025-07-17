@@ -15,6 +15,7 @@ import AllStudySessions from '../Pages/AllStudySessions/AllStudySessions';
 import ManageStudySessions from '../Pages/ManageSessions/ManageSessions';
 import UploadMaterials from '../Pages/Upload Materials/UploadMaterials';
 import MyMaterials from '../Pages/My Materials/MyMaterials';
+import StudyMaterials from '../Pages/StudyMaterials/StudyMaterials';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         {
           path: '/manage-notes',
           Component: ManageNotes
+        },
+        {
+          path: '/study-materials',
+          Component: StudyMaterials
         },
         // for teacher
         {
