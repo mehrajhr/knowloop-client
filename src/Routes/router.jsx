@@ -23,6 +23,8 @@ import PrivateRoutes from './PrivateRoutes';
 import TutorRoutes from './TutorRoutes';
 import AdminRoutes from './AdminRoutes';
 import NotFound from '../Pages/Error/NotFound';
+import AllTutors from '../Pages/AllTutors/AllTutors';
+import Payment from '../Pages/Payment/Payment';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
         {
           path: '/study-sessions/:id',
           Component: StudySessionDetails
+        },
+        {
+          path: '/all-tutors',
+          Component: AllTutors
+        },
+        {
+          path: '/payment/:id',
+          Component: Payment
         },
         // for students
         {

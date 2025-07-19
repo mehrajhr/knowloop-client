@@ -19,7 +19,7 @@ import useUserRole from "../../hooks/useUserRole ";
 
 const StudySessionDetails = () => {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const cancelBooking = useCancelBookingCore();
   const navigate = useNavigate();
@@ -32,7 +32,10 @@ const StudySessionDetails = () => {
   const [timerActive, setTimerActive] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(5);
-  const role = useUserRole();
+  const { role } = useUserRole();
+  const [ isPaid, setIsPaid ] = useState('unpaid');
+
+  console.log(role);
 
   const {
     data: session = {},
@@ -55,6 +58,8 @@ const StudySessionDetails = () => {
       );
       const data = res.data;
       setAlreadyBooked(data.booked);
+      setIsPaid(data?.paymentStatus==='paid'? 'paid' : 'unpaid');
+      console.log(isPaid);
 
       if (data.booked && data.paymentStatus === "unpaid") {
         setBookingInProgress(true);
@@ -269,11 +274,11 @@ const StudySessionDetails = () => {
             <button
               onClick={handleBookNow}
               className={`btn ${
-                user && isOngoing && !alreadyBooked
+                user && isOngoing && !alreadyBooked && role === "student"
                   ? "btn-primary"
                   : "btn-disabled"
               }`}
-              disabled={!user || !isOngoing || alreadyBooked || role !== 'student'}
+              disabled={!user || !isOngoing || alreadyBooked}
             >
               {alreadyBooked
                 ? "Already Booked"
@@ -284,7 +289,7 @@ const StudySessionDetails = () => {
                 : "Login to Book"}
             </button>
 
-            {alreadyBooked && isFree && (
+            {alreadyBooked && (isFree || isPaid === 'paid') && (
               <button onClick={handleCancelBooking} className="btn btn-warning">
                 Cancel Booking
               </button>

@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import DrawerMenuButton from "./DrawerMenuButton";
 import { useUser } from "../../hooks/useUser";
 import Loading from "../Loading/Loading";
-import { FaHome, FaChalkboardTeacher } from "react-icons/fa";
+import { FaHome, FaChalkboardTeacher, FaUserGraduate } from "react-icons/fa";
 import "./navlinkStyle.css";
 
 const Navbar = () => {
@@ -27,6 +27,12 @@ const Navbar = () => {
       <li className="my-2 md:mx-2 md:my-0">
         <NavLink to="/study-sessions">
           <FaChalkboardTeacher /> Study Sessions
+        </NavLink>
+      </li>
+
+      <li className="my-2 md:mx-2 md:my-0">
+        <NavLink to="/all-tutors" className="flex items-center gap-2">
+          <FaUserGraduate /> All Tutors
         </NavLink>
       </li>
     </>

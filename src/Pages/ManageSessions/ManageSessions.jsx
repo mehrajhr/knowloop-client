@@ -99,13 +99,34 @@ const ManageStudySessions = () => {
                 </td>
                 <td>
                   {session.status === "rejected" ? (
-                    <button
-                      className="btn btn-sm btn-info"
-                      onClick={() => handleResend(session._id)}
-                    >
-                      <FiSend className="mr-1" />
-                      Resend
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        className="btn btn-sm btn-error"
+                        onClick={() => {
+                          Swal.fire({
+                            title: "Rejection Feedback",
+                            html: `
+              <p><strong>Reason:</strong> ${
+                session.rejectionReason || "N/A"
+              }</p>
+              <p><strong>Feedback:</strong> ${
+                session.rejectionFeedback || "N/A"
+              }</p>
+            `,
+                            icon: "info",
+                          });
+                        }}
+                      >
+                        View Feedback
+                      </button>
+                      <button
+                        className="btn btn-sm btn-info"
+                        onClick={() => handleResend(session._id)}
+                      >
+                        <FiSend className="mr-1" />
+                        Resend
+                      </button>
+                    </div>
                   ) : (
                     <span className="text-gray-400">—</span>
                   )}

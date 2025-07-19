@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { Modal, Input, Radio } from "antd";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -7,11 +6,16 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 const ApproveRejectButtons = ({ sessionId, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const [modalOpen, setModalOpen] = useState(false);
+  const [rejectModalOpen, setRejectModalOpen] = useState(false);
   const [type, setType] = useState("free");
   const [fee, setFee] = useState("0");
 
+  // New rejection fields
+  const [rejectionReason, setRejectionReason] = useState("");
+  const [feedback, setFeedback] = useState("");
+
   const handleApprove = async () => {
-    const finalFee = type === "paid" ? parseFloat(fee) : 'Free';
+    const finalFee = type === "paid" ? parseFloat(fee) : "Free";
 
     try {
       const res = await axiosSecure.patch(`sessions/approve/${sessionId}`, {
@@ -28,21 +32,27 @@ const ApproveRejectButtons = ({ sessionId, refetch }) => {
     }
   };
 
-  const handleReject = async () => {
-    const confirm = await Swal.fire({
-      title: "Are you sure?",
-      text: "This session will be removed from the pending list.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, reject it",
-    });
-
-    if (!confirm.isConfirmed) return;
+  const handleRejectSubmit = async () => {
+    if (!rejectionReason || !feedback) {
+      Swal.fire("Warning", "Please fill all fields.", "warning");
+      return;
+    }
 
     try {
-      const res = await axiosSecure.patch(`sessions/reject/${sessionId}`);
+      const res = await axiosSecure.patch(`sessions/reject/${sessionId}`, {
+        reason: rejectionReason,
+        feedback,
+      });
+
       if (res.data.success) {
-        Swal.fire("Rejected", "Session has been rejected.", "success");
+        Swal.fire(
+          "Rejected",
+          "Session has been rejected with feedback.",
+          "success"
+        );
+        setRejectionReason("");
+        setFeedback("");
+        setRejectModalOpen(false);
         refetch();
       }
     } catch {
@@ -61,7 +71,10 @@ const ApproveRejectButtons = ({ sessionId, refetch }) => {
       </button>
 
       {/* ❌ Reject Button */}
-      <button onClick={handleReject} className="btn btn-error btn-sm">
+      <button
+        onClick={() => setRejectModalOpen(true)}
+        className="btn btn-error btn-sm"
+      >
         Reject
       </button>
 
@@ -88,6 +101,30 @@ const ApproveRejectButtons = ({ sessionId, refetch }) => {
               placeholder="Enter Fee Amount"
             />
           )}
+        </div>
+      </Modal>
+
+      {/* Modal for Rejection */}
+      <Modal
+        open={rejectModalOpen}
+        title="Reject Session"
+        onCancel={() => setRejectModalOpen(false)}
+        onOk={handleRejectSubmit}
+        okText="Reject"
+        okButtonProps={{ danger: true }}
+      >
+        <div className="space-y-4">
+          <Input
+            placeholder="Rejection Reason"
+            value={rejectionReason}
+            onChange={(e) => setRejectionReason(e.target.value)}
+          />
+          <Input.TextArea
+            placeholder="Feedback for the tutor"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            rows={4}
+          />
         </div>
       </Modal>
     </div>
