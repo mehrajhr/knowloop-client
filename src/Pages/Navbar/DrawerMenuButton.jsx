@@ -17,7 +17,7 @@ import {
 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
-import { FaBookOpen } from "react-icons/fa";
+import { FaBookOpen, FaMoneyCheckAlt } from "react-icons/fa";
 import useUserRole from "../../hooks/useUserRole ";
 import Loading from "../Loading/Loading";
 
@@ -67,6 +67,11 @@ const DrawerMenuButton = () => {
           <li>
             <Link to="/study-materials">
               <FiBookOpen className="inline mr-2" /> Study Materials
+            </Link>
+          </li>
+          <li>
+            <Link to="/my-transactions-history">
+              <FaMoneyCheckAlt className="inline mr-2" /> My Transactions
             </Link>
           </li>
         </>

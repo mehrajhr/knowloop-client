@@ -25,6 +25,7 @@ import AdminRoutes from './AdminRoutes';
 import NotFound from '../Pages/Error/NotFound';
 import AllTutors from '../Pages/AllTutors/AllTutors';
 import Payment from '../Pages/Payment/Payment';
+import MyTransactions from '../Pages/MyTransactions/MyTransactions';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
         {
           path: '/my-booked-sessions',
           element: <PrivateRoutes><MyBookedSessions></MyBookedSessions></PrivateRoutes>
+        },
+        {
+          path: '/my-transactions-history',
+          element: <PrivateRoutes><MyTransactions></MyTransactions></PrivateRoutes>
         },
         {
           path: '/create-note',
