@@ -2,7 +2,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FiTrash2, FiExternalLink } from "react-icons/fi";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { Link } from "react-router";
 
 const ManageMaterialsAdmin = () => {
   const axiosSecure = useAxiosSecure();
@@ -71,22 +70,24 @@ const ManageMaterialsAdmin = () => {
                 </p>
 
                 <div className="flex items-center justify-between">
-                  <Link
-                    to={material.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="link text-blue-500 flex items-center gap-1"
-                  >
-                    Google Drive <FiExternalLink />
-                  </Link>
+                  <p className="text-sm text-gray-600">
+                    <a
+                      href={material.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-500 underline flex gap-1 items-center"
+                    >
+                      Google Drive <FiExternalLink />
+                    </a>
+                  </p>
 
-                  <Link
+                  <a
                     to={material.image}
                     download
                     className="btn btn-sm btn-outline btn-success"
                   >
                     Download
-                  </Link>
+                  </a>
                 </div>
 
                 <button

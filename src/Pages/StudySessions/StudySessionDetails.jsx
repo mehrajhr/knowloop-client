@@ -35,7 +35,7 @@ const StudySessionDetails = () => {
   const { role } = useUserRole();
   const [ isPaid, setIsPaid ] = useState('unpaid');
 
-  console.log(role);
+  // console.log(role);
 
   const {
     data: session = {},
@@ -59,7 +59,7 @@ const StudySessionDetails = () => {
       const data = res.data;
       setAlreadyBooked(data.booked);
       setIsPaid(data?.paymentStatus==='paid'? 'paid' : 'unpaid');
-      console.log(isPaid);
+      // console.log(isPaid);
 
       if (data.booked && data.paymentStatus === "unpaid") {
         setBookingInProgress(true);

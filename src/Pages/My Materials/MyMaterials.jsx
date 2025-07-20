@@ -5,16 +5,19 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../Loading/Loading";
-import { Link } from "react-router";
 
 const MyMaterials = () => {
-  const { user } = useAuth();
+  const { user , loading} = useAuth();
   const axiosSecure = useAxiosSecure();
   const [editingMaterial, setEditingMaterial] = useState(null);
   const [updatedLink, setUpdatedLink] = useState("");
   const [updatedTitle, setUpdatedTitle] = useState("");
 
-  const { data: materials = [], refetch , isLoading } = useQuery({
+  const {
+    data: materials = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["materials", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`materials?email=${user?.email}`);
@@ -22,11 +25,11 @@ const MyMaterials = () => {
     },
   });
 
-  if(isLoading){
-    return <Loading></Loading>
+  if (isLoading || loading) {
+    return <Loading></Loading>;
   }
 
-  console.log(materials);
+  // console.log(materials);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -80,9 +83,13 @@ const MyMaterials = () => {
     }
   };
 
+  console.log(materials);
+
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6 text-center">My Study Materials</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        My Study Materials
+      </h2>
 
       {materials?.length === 0 ? (
         <p className="text-center">No materials uploaded yet.</p>
@@ -103,14 +110,14 @@ const MyMaterials = () => {
               <div className="card-body">
                 <h3 className="font-semibold text-lg">{material.title}</h3>
                 <p className="text-sm text-gray-600">
-                  <Link
-                    to={material.link}
+                  <a
+                    href={material.link}
                     target="_blank"
                     rel="noreferrer"
                     className="text-blue-500 underline"
                   >
                     View Resource
-                  </Link>
+                  </a>
                 </p>
                 <div className="mt-3 flex justify-end gap-2">
                   <button
@@ -138,7 +145,7 @@ const MyMaterials = () => {
 
       {/* Edit Modal */}
       {editingMaterial && (
-        <dialog id="edit_modal" className="modal modal-open">
+        <dialog id="edit_modal" className="modal modal-open"  key={editingMaterial?._id}>
           <div className="modal-box">
             <button
               onClick={() => setEditingMaterial(null)}
@@ -169,7 +176,10 @@ const MyMaterials = () => {
             </div>
 
             <div className="modal-action mt-4">
-              <button onClick={handleUpdateMaterial} className="btn btn-primary">
+              <button
+                onClick={handleUpdateMaterial}
+                className="btn btn-primary"
+              >
                 Save Changes
               </button>
               <button

@@ -1,3 +1,4 @@
+import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
 
 const WhyChooseKnowloop = () => {

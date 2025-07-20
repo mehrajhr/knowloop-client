@@ -23,7 +23,7 @@ const SocialLogin = () => {
           last_login: new Date().toISOString(),
         };
         const result = await axios.post(
-          "http://localhost:5000/users",
+          "https://know-loop-server.vercel.app/users",
           userData
         );
 

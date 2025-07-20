@@ -20,11 +20,11 @@ const Login = () => {
   const from = location.state?.from || "/";
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     loginUser(data.email, data.password)
       .then(async (res) => {
         const email = data.email;
-        const response = await axios.post("http://localhost:5000/users", {
+        const response = await axios.post("https://know-loop-server.vercel.app/users", {
           email,
         });
         navigate(from);

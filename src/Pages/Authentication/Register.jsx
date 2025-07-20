@@ -36,7 +36,7 @@ const RegisterForm = () => {
         formData
       );
       const imageUrl = imgbbRes.data.data.url;
-      console.log(imageUrl);
+      // console.log(imageUrl);
 
       const userData = {
         name: data.name,
@@ -65,7 +65,7 @@ const RegisterForm = () => {
               });
 
             const res = await axios.post(
-              "http://localhost:5000/users",
+              "https://know-loop-server.vercel.app/users",
               userData
             );
             navigate(from);
