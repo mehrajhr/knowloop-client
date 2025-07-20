@@ -1,12 +1,50 @@
-# React + Vite
+📚 Project Name: KnowLoop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tech Stack: MongoDB, Express.js, React.js, Node.js, Firebase Auth, JWT, Stripe (for payment), Tailwind CSS, SweetAlert2.
 
-Currently, two official plugins are available:
+Description:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+TutorConnect is a full-featured educational collaboration platform designed to connect students and tutors under the supervision of an admin. The platform allows seamless session booking, resource sharing, and session management with both free and paid options.
 
-## Expanding the ESLint configuration
+👨‍🎓 Student Features:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Browse and book available sessions.
+
+Instantly access free sessions or unlock paid ones after completing payment.
+
+View and download resources shared by tutors.
+
+Create personal notes within sessions.
+
+Leave ratings and reviews for completed sessions.
+
+
+👨‍🏫 Tutor Features:
+
+Create new learning sessions (mark as free or paid).
+
+Upload relevant resources under each session.
+
+Track how many students booked each session.
+
+View feedback and rejection reasons if the admin disapproves any session.
+
+
+🛠️ Admin Features:
+
+Manage all users (students and tutors).
+
+Approve or reject session requests from tutors with optional feedback.
+
+Toggle session type between free or paid.
+
+Monitor all uploaded resources and delete if necessary for moderation.
+
+
+Authentication & Security:
+
+Firebase Authentication and JWT for secure login and route protection.
+
+Role-based access: Admin, Tutor, and Student.
+
+Stripe integration for secure payments.
