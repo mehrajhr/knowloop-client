@@ -49,3 +49,5 @@ Firebase Authentication and JWT for secure login and route protection.
 Role-based access: Admin, Tutor, and Student.
 
 Stripe integration for secure payments.
+
+🔥 Live Project: https://know-loop.web.app/
