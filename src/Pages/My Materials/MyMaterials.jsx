@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../Loading/Loading";
+import { Link } from "react-router";
 
 const MyMaterials = () => {
   const { user } = useAuth();
@@ -24,6 +25,8 @@ const MyMaterials = () => {
   if(isLoading){
     return <Loading></Loading>
   }
+
+  console.log(materials);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -81,11 +84,11 @@ const MyMaterials = () => {
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-6 text-center">My Study Materials</h2>
 
-      {materials.length === 0 ? (
+      {materials?.length === 0 ? (
         <p className="text-center">No materials uploaded yet.</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {materials.map((material) => (
+          {materials?.map((material) => (
             <div
               key={material._id}
               className="card shadow-xl border rounded-xl hover:shadow-2xl transition"
@@ -100,14 +103,14 @@ const MyMaterials = () => {
               <div className="card-body">
                 <h3 className="font-semibold text-lg">{material.title}</h3>
                 <p className="text-sm text-gray-600">
-                  <a
-                    href={material.link}
+                  <Link
+                    to={material.link}
                     target="_blank"
                     rel="noreferrer"
                     className="text-blue-500 underline"
                   >
                     View Resource
-                  </a>
+                  </Link>
                 </p>
                 <div className="mt-3 flex justify-end gap-2">
                   <button

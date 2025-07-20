@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import loginanimation from "../../assets/login.json";
 import Lottie from "lottie-react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "./SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
@@ -15,13 +15,19 @@ const Login = () => {
   } = useForm();
 
   const { loginUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from || "/";
 
   const onSubmit = (data) => {
     console.log(data);
     loginUser(data.email, data.password)
-      .then(async(res) => {
+      .then(async (res) => {
         const email = data.email;
-        const response = await axios.post('http://localhost:5000/users' , {email});
+        const response = await axios.post("http://localhost:5000/users", {
+          email,
+        });
+        navigate(from);
         Swal.fire({
           icon: "success",
           title: "Login Successful",

@@ -2,25 +2,33 @@ import React from "react";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router";
 
 const SocialLogin = () => {
   const { signWithGoogle } = useAuth();
+  const location = useLocation();
+  const from = location.state?.from || "/";
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     signWithGoogle()
-      .then(async(res) => {
+      .then(async (res) => {
         const user = res.user;
         const userData = {
           name: user?.displayName,
           email: user?.email,
           photo: user?.photoURL,
-          role: 'student',
+          role: "student",
           created_at: new Date().toISOString(),
           last_login: new Date().toISOString(),
         };
-        const result = await axios.post('http://localhost:5000/users' , userData);
+        const result = await axios.post(
+          "http://localhost:5000/users",
+          userData
+        );
 
         Swal.fire("Success!", "Account login successfully.", "success");
+        navigate(from);
       })
       .catch((err) => {
         Swal.fire("Error", "Login failed.", "error");

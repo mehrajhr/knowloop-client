@@ -11,10 +11,11 @@ const TutorRoutes = ({ children }) => {
   if (loading || roleLoading) {
     return <Loading></Loading>;
   }
-  if (role !== "tutor" || !user) {
+  if (!user) {
+    return <Navigate to="/login"></Navigate>;
+  } else if (role !== "tutor") {
     return <Navigate to="/forbidden"></Navigate>;
-  }
-  return children;
+  } else return children;
 };
 
 export default TutorRoutes;

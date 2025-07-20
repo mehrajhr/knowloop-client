@@ -4,12 +4,15 @@ import axios from "axios";
 import { useState } from "react";
 import registrationanimation from "../../assets/register.json";
 import Lottie from "lottie-react";
-import { Link, Links } from "react-router";
+import { Link, Links, useLocation, useNavigate } from "react-router";
 import SocialLogin from "./SocialLogin";
 import useAuth from "../../hooks/useAuth";
 
 const RegisterForm = () => {
   const { setUser, profileUpdate, createUser } = useAuth();
+  const location = useLocation();
+  const from = location.state?.from || "/";
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -45,7 +48,7 @@ const RegisterForm = () => {
       };
 
       createUser(data.email, data.password)
-        .then(async(res) => {
+        .then(async (res) => {
           if (res.user) {
             profileUpdate(userData)
               .then(() => {
@@ -61,7 +64,11 @@ const RegisterForm = () => {
                 Swal.fire("Error", "Image upload Failed", "error");
               });
 
-              const res = await axios.post('http://localhost:5000/users' , userData);
+            const res = await axios.post(
+              "http://localhost:5000/users",
+              userData
+            );
+            navigate(from);
           }
         })
         .catch((err) => {

@@ -74,9 +74,11 @@ const AvailableSessionsHome = () => {
             );
           })}
         </div>
-        <button className="btn btn-outline btn-primary mx-auto mt-8 flex gap-0 justify-center items-center">
-          See More <FaArrowRight className="ml-2" />
-        </button>
+        <Link to='/study-sessions'>
+          <button className="btn btn-outline btn-primary mx-auto mt-8 flex gap-0 justify-center items-center">
+            See More <FaArrowRight className="ml-2" />
+          </button>
+        </Link>
       </div>
     </section>
   );

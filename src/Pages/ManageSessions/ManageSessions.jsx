@@ -13,7 +13,7 @@ const ManageStudySessions = () => {
   const { data: sessions = [], isLoading } = useQuery({
     queryKey: ["tutorSessions", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`sessions?email=${user?.email}`);
+      const res = await axiosSecure.get(`sessions?email=${user?.email}&status=all`);
       return res.data;
     },
     enabled: !!user?.email,

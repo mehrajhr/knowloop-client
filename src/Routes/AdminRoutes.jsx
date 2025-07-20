@@ -11,9 +11,10 @@ const AdminRoutes = ({ children }) => {
   if (loading || roleLoading) {
     return <Loading></Loading>;
   }
-  if (role !== "admin" || !user) {
+  if (!user) {
+    return <Navigate to="/login"></Navigate>;
+  } else if (role !== "admin") {
     return <Navigate to="/forbidden"></Navigate>;
-  }
-  return children;
+  } else return children;
 };
 export default AdminRoutes;

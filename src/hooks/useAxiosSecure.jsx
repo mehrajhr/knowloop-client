@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import useAuth from "./useAuth";
+import { useNavigate } from "react-router";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5000/",
@@ -8,6 +9,7 @@ const axiosInstance = axios.create({
 
 const useAxiosSecure = () => {
   const { user, logOutUser , loading} = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!loading && user?.accessToken) {
@@ -23,10 +25,13 @@ const useAxiosSecure = () => {
       const responseInterceptor = axiosInstance.interceptors.response.use(
         (res) => res,
         (err) => {
-          if (err?.response?.status === 401 || err?.response?.status === 403) {
+          if(err?.response?.status === 403){
+            navigate('/forbidden');
+          }
+          else if (err?.response?.status === 401) {
             logOutUser()
               .then(() => {
-                console.log("Logged out due to token issue.");
+                navigate('/login');
               })
               .catch(console.error);
           }
