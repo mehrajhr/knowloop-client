@@ -5,7 +5,7 @@ Tech Stack: MongoDB, Express.js, React.js, Node.js, Firebase Auth, JWT, Stripe (
 
 Description:
 
-TutorConnect is a full-featured educational collaboration platform designed to connect students and tutors under the supervision of an admin. The platform allows seamless session booking, resource sharing, and session management with both free and paid options.
+KnowLoop is a full-featured educational collaboration platform designed to connect students and tutors under the supervision of an admin. The platform allows seamless session booking, resource sharing, and session management with both free and paid options.
 
 👨‍🎓 Student Features:
 
@@ -15,14 +15,14 @@ Instantly access free sessions or unlock paid ones after completing payment.
 
 View and download resources shared by tutors.
 
-Create personal notes within sessions.
+Create personal notes.
 
 Leave ratings and reviews for completed sessions.
 
 
 👨‍🏫 Tutor Features:
 
-Create new learning sessions (mark as free or paid).
+Create new learning sessions.
 
 Upload relevant resources under each session.
 
@@ -33,7 +33,7 @@ View feedback and rejection reasons if the admin disapproves any session.
 
 🛠️ Admin Features:
 
-Manage all users (students and tutors).
+Manage all users .
 
 Approve or reject session requests from tutors with optional feedback.
 
