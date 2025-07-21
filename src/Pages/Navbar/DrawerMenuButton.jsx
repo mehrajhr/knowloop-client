@@ -19,14 +19,16 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { FaBookOpen, FaMoneyCheckAlt } from "react-icons/fa";
 import useUserRole from "../../hooks/useUserRole ";
-import Loading from "../Loading/Loading";
 
 const DrawerMenuButton = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { logOutUser, setUser } = useAuth();
+  const { logOutUser, setUser, user, loading } = useAuth();
   const { role, roleLoading } = useUserRole();
 
-  if (roleLoading) return <span>Loading...</span>;
+  console.log(role, loading , roleLoading , user);
+
+  if (roleLoading || loading)
+    return <span className="loading loading-bars loading-xs"></span>;
 
   const links = (
     <>

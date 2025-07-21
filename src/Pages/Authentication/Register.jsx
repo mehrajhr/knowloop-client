@@ -9,7 +9,7 @@ import SocialLogin from "./SocialLogin";
 import useAuth from "../../hooks/useAuth";
 
 const RegisterForm = () => {
-  const { setUser, profileUpdate, createUser } = useAuth();
+  const { setUser, profileUpdate, createUser , setLoading} = useAuth();
   const location = useLocation();
   const from = location.state?.from || "/";
   const navigate = useNavigate();
