@@ -23,7 +23,7 @@ const useCancelBookingCore = () => {
 
     try {
       const res = await axiosSecure.delete(
-        `/booked-sessions?email=${user.email}&sessionId=${sessionId}`
+        `booked-sessions?email=${user.email}&sessionId=${sessionId}`
       );
       if (res.data.success) {
         Swal.fire("Canceled", "Booking has been canceled", "success");

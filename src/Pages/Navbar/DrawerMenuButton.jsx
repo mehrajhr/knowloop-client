@@ -25,7 +25,7 @@ const DrawerMenuButton = () => {
   const { logOutUser, setUser, user, loading } = useAuth();
   const { role, roleLoading } = useUserRole();
 
-  console.log(role, loading , roleLoading , user);
+  // console.log(role, loading , roleLoading , user);
 
   if (roleLoading || loading)
     return <span className="loading loading-bars loading-xs"></span>;

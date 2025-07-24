@@ -10,7 +10,7 @@ const useUserBookedSessions = () => {
   const userBookedSessions = useQuery({
     queryKey: ["bookedSessions", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/booked-sessions/user/${user?.email}`);
+      const res = await axiosSecure.get(`booked-sessions/user/${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email,

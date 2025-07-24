@@ -83,7 +83,7 @@ const MyMaterials = () => {
     }
   };
 
-  console.log(materials);
+  // console.log(materials);
 
   return (
     <div className="p-4">

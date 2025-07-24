@@ -289,7 +289,7 @@ const StudySessionDetails = () => {
                 : "Login to Book"}
             </button>
 
-            {alreadyBooked && (isFree || isPaid === 'paid') && (
+            {alreadyBooked && (isFree || isPaid === 'paid') && user && role === 'student' &&(
               <button onClick={handleCancelBooking} className="btn btn-warning">
                 Cancel Booking
               </button>

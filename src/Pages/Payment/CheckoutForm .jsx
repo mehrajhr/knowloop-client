@@ -65,7 +65,7 @@ const CheckoutForm = () => {
       setTransactionId(paymentIntent.id);
 
       // 🔸 Save transaction
-      await axiosSecure.post("/transactions", {
+      await axiosSecure.post("transactions", {
         sessionId: session._id,
         studentEmail: user?.email,
         tutorEmail: session.tutor_email,
@@ -77,6 +77,13 @@ const CheckoutForm = () => {
       // 🔸 Update session payment status
       await axiosSecure.patch(`sessions/payment/${session._id}`, {
         payment_status: "paid",
+        studentEmail: user?.email
+      })
+      .then(res => {
+        // console.log(res.data);
+      })
+      .catch(err => {
+        // console.log(err);
       });
 
       Swal.fire({
