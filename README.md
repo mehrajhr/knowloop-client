@@ -50,4 +50,6 @@ Role-based access: Admin, Tutor, and Student.
 
 Stripe integration for secure payments.
 
+🔥 KnowLoop server repo : https://github.com/mehrajhr/knowloop-server
+
 🔥 Live Project: https://know-loop.web.app/
