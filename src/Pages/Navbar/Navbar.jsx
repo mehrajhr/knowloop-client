@@ -5,7 +5,13 @@ import useAuth from "../../hooks/useAuth";
 import DrawerMenuButton from "./DrawerMenuButton";
 import { useUser } from "../../hooks/useUser";
 import Loading from "../Loading/Loading";
-import { FaHome, FaChalkboardTeacher, FaUserGraduate, FaInfoCircle } from "react-icons/fa";
+import {
+  FaHome,
+  FaChalkboardTeacher,
+  FaUserGraduate,
+  FaInfoCircle,
+  FaLightbulb,
+} from "react-icons/fa";
 import "./navlinkStyle.css";
 
 const Navbar = () => {
@@ -37,6 +43,12 @@ const Navbar = () => {
       </li>
 
       <li className="my-2 md:mx-2 md:my-0">
+        <NavLink to="/tips" className="flex items-center gap-2">
+          <FaLightbulb /> Tips
+        </NavLink>
+      </li>
+
+      <li className="my-2 md:mx-2 md:my-0">
         <NavLink to="/about" className="flex items-center gap-2">
           <FaInfoCircle /> About
         </NavLink>
@@ -44,7 +56,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 shadow-sm sticky top-0 right-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

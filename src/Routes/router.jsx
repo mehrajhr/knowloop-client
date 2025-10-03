@@ -28,6 +28,7 @@ import MyTransactions from '../Pages/MyTransactions/MyTransactions';
 import MyProfile from '../Pages/MyProfile/MyProfile';
 import StudentRoutes from './StudentRoutes';
 import PrivateRoutes from './PrivateRoutes';
+import Tips from '../Pages/Tips/Tips';
 
 const router = createBrowserRouter([
   {
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
         },
         {
           path: '/payment/:id',
-          Component: Payment
+          element: <StudentRoutes><Payment></Payment></StudentRoutes>
         },
         {
           path: '/my-profile',
@@ -124,6 +125,10 @@ const router = createBrowserRouter([
         {
           path:'/about',
           Component: About
+        },
+        {
+          path: '/tips',
+          Component: Tips
         },
         {
           path: '/forbidden',
