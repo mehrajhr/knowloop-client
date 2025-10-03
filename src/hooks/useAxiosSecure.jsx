@@ -4,8 +4,8 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
 const axiosInstance = axios.create({
-  // baseURL: "https://know-loop-server.vercel.app/",
-  baseURL: 'http://localhost:5000/'
+  baseURL: "https://know-loop-server.vercel.app/",
+  // baseURL: 'http://localhost:5000/'
 });
 
 const useAxiosSecure = () => {
