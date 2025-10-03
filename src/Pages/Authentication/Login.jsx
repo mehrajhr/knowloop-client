@@ -11,8 +11,15 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: "",   // 👈 Start empty
+      password: "", // 👈 Start empty
+    },
+  });
 
   const { loginUser } = useAuth();
   const location = useLocation();
@@ -20,13 +27,10 @@ const Login = () => {
   const from = location.state?.from || "/";
 
   const onSubmit = (data) => {
-    // console.log(data);
     loginUser(data.email, data.password)
-      .then(async (res) => {
+      .then(async () => {
         const email = data.email;
-        const response = await axios.post("https://know-loop-server.vercel.app/users", {
-          email,
-        });
+        await axios.post("https://know-loop-server.vercel.app/users", { email });
         navigate(from);
         Swal.fire({
           icon: "success",
@@ -39,10 +43,38 @@ const Login = () => {
         console.log(err);
       });
   };
+
+  // Autofill helpers
+  const fillAdmin = () => {
+    reset({ email: "adminxyz@gmail.com", password: "Admin1234@" });
+  };
+
+  const fillTutor = () => {
+    reset({ email: "tutorknowloop@gmail.com", password: "tutor1234@" });
+  };
+
   return (
     <div className="flex md:flex-row flex-col-reverse justify-center items-center gap-10">
-      <div className="max-w-sm mt-10 p-6 shadow-lg rounded-xl bg-white">
-        <h2 className="text-3xl font-bold mb-6">Login!</h2>
+      <div className="max-w-sm mt-10 p-6 shadow-lg rounded-xl bg-white w-full">
+        <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
+
+        {/* Quick Login Buttons */}
+        <div className="flex gap-3 mb-4">
+          <button
+            type="button"
+            onClick={fillAdmin}
+            className="btn btn-outline btn-sm w-1/2"
+          >
+            Login as Admin
+          </button>
+          <button
+            type="button"
+            onClick={fillTutor}
+            className="btn btn-outline btn-sm w-1/2"
+          >
+            Login as Tutor
+          </button>
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email */}
@@ -92,13 +124,19 @@ const Login = () => {
             Login
           </button>
         </form>
-        <p>
-          Don't have an account ?{" "}
+
+        <p className="mt-3 text-center">
+          Default login is as <span className="font-semibold">Student</span>.
+        </p>
+
+        <p className="text-center mt-2">
+          Don&apos;t have an account?{" "}
           <Link to="/register" className="btn btn-link">
             Register
           </Link>
         </p>
-        <SocialLogin></SocialLogin>
+
+        <SocialLogin />
       </div>
 
       <div>
@@ -106,7 +144,7 @@ const Login = () => {
           style={{ width: "300px", height: "full" }}
           animationData={loginanimation}
           loop={true}
-        ></Lottie>
+        />
       </div>
     </div>
   );
