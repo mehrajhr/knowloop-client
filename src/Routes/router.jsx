@@ -19,13 +19,15 @@ import StudyMaterials from '../Pages/StudyMaterials/StudyMaterials';
 import ManageUsers from '../Pages/ManageUsers/ManageUsers';
 import ManageMaterialsAdmin from '../Pages/ManageMaterialAdmin/ManageMaterialsAdmin';
 import Forbidden from '../Pages/Forbidden/Forbidden';
-import PrivateRoutes from './PrivateRoutes';
 import TutorRoutes from './TutorRoutes';
 import AdminRoutes from './AdminRoutes';
 import NotFound from '../Pages/Error/NotFound';
 import AllTutors from '../Pages/AllTutors/AllTutors';
 import Payment from '../Pages/Payment/Payment';
 import MyTransactions from '../Pages/MyTransactions/MyTransactions';
+import MyProfile from '../Pages/MyProfile/MyProfile';
+import StudentRoutes from './StudentRoutes';
+import PrivateRoutes from './PrivateRoutes';
 
 const router = createBrowserRouter([
   {
@@ -52,26 +54,30 @@ const router = createBrowserRouter([
           path: '/payment/:id',
           Component: Payment
         },
+        {
+          path: '/my-profile',
+          element: <PrivateRoutes> <MyProfile></MyProfile> </PrivateRoutes>
+        },
         // for students
         {
           path: '/my-booked-sessions',
-          element: <PrivateRoutes><MyBookedSessions></MyBookedSessions></PrivateRoutes>
+          element: <StudentRoutes><MyBookedSessions></MyBookedSessions></StudentRoutes>
         },
         {
           path: '/my-transactions-history',
-          element: <PrivateRoutes><MyTransactions></MyTransactions></PrivateRoutes>
+          element: <StudentRoutes><MyTransactions></MyTransactions></StudentRoutes>
         },
         {
           path: '/create-note',
-          element: <PrivateRoutes><CreateNote></CreateNote></PrivateRoutes>
+          element: <StudentRoutes><CreateNote></CreateNote></StudentRoutes>
         },
         {
           path: '/manage-notes',
-          element: <PrivateRoutes><ManageNotes></ManageNotes></PrivateRoutes>
+          element: <StudentRoutes><ManageNotes></ManageNotes></StudentRoutes>
         },
         {
           path: '/study-materials',
-          element: <PrivateRoutes><StudyMaterials></StudyMaterials></PrivateRoutes>
+          element: <StudentRoutes><StudyMaterials></StudyMaterials></StudentRoutes>
         },
         // for teacher
         {

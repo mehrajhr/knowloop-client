@@ -4,7 +4,7 @@ import Loading from '../Pages/Loading/Loading';
 import { Navigate, useLocation } from 'react-router';
 import useUserRole from '../hooks/useUserRole ';
 
-const PrivateRoutes = ({children}) => {
+const StudentRoutes = ({children}) => {
     const {user , loading} = useAuth();
     const {role} = useUserRole();
     const location = useLocation();
@@ -15,9 +15,12 @@ const PrivateRoutes = ({children}) => {
     if(!user){
         return <Navigate to='/login' state={{from}}></Navigate>
     }
+    else if(role === 'admin' || role === 'tutor'){
+        return <Navigate to='/' ></Navigate>
+    }
     else{
         return children
     }
 };
 
-export default PrivateRoutes;
+export default StudentRoutes;

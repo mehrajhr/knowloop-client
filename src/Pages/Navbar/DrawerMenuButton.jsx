@@ -33,13 +33,8 @@ const DrawerMenuButton = () => {
   const links = (
     <>
       <li>
-        <Link onClick={() => setIsDrawerOpen(false)}>
+        <Link to='/my-profile' onClick={() => setIsDrawerOpen(false)}>
           <FiUser className="inline mr-2" /> My Profile
-        </Link>
-      </li>
-      <li>
-        <Link onClick={() => setIsDrawerOpen(false)}>
-          <FiEdit className="inline mr-2" /> Update Profile
         </Link>
       </li>
 
