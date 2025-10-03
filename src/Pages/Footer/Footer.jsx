@@ -4,7 +4,7 @@ import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 const Footer = () => {
   return (
     <footer className="bg-base-200 text-base-content pt-10 pb-6 border-t border-base-300 mt-10">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
 
         {/* Brand */}
         <div>
@@ -36,17 +36,6 @@ const Footer = () => {
             <li><Link to="/about" className="link link-hover">About</Link></li> {/* in-page scroll */}
             <li><Link to="/login" className="link link-hover">Login</Link></li>
             <li><Link to="/register" className="link link-hover">Register</Link></li>
-          </ul>
-        </div>
-
-        {/* Features */}
-        <div>
-          <h4 className="footer-title">Features</h4>
-          <ul className="space-y-2">
-            <li><Link  className="link link-hover">Live Sessions</Link></li>
-            <li><Link  className="link link-hover">Shared Resources</Link></li>
-            <li><Link  className="link link-hover">Top Tutors</Link></li>
-            <li><Link  className="link link-hover">Dashboard</Link></li>
           </ul>
         </div>
 
